@@ -17,10 +17,8 @@ class UserDAO:
  
     #function for adding posts to the user
     def add_posts(self,username , post):
-        new_post ={'_id' : datetime.datetime.now(),
-                            'head' : post['heading'],
-                           'text': post['content'],
-                          }
+        new_post ={ '_id' : post['id'] ,
+                            'head' : post['heading']}
         print new_post
         #print self.users.find_one({'_id':username})
         user =self.users.update({'_id':username},

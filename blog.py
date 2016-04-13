@@ -1,10 +1,14 @@
 import pymongo
 import sessionDAO
 import userDAO
+import postsDAO
 import bottle
 import cgi
 import re
 import os
+import datetime
+import random
+import string
 
 wd=os.path.dirname(os.path.realpath(__file__))
 print wd
@@ -12,7 +16,11 @@ __author__ = 'aje'
 
 
 
-
+def make_salt():
+        salt = ""
+        for i in range(5):
+            salt = salt + random.choice(string.ascii_letters)
+        return salt
 # General Discussion on structure. This program implements a blog. This file is the best place to start to get
 # to know the code. In this file, which is the controller, we define a bunch of HTTP routes that are handled
 # by functions. The basic way that this magic occurs is through the decorator design pattern. Decorators
@@ -29,8 +37,8 @@ def blog_index():
     username = sessions.get_username(cookie)
     
     # todo: this is not yet implemented at this point in the course
-    
-    return bottle.template(wd+'/views/'+'blog_template.tpl.html', dict(username=username))
+    all_posts=posts.get_posts();
+    return bottle.template(wd+'/views/'+'blog_template.tpl.html', dict(username=username,all_posts = all_posts))
 
 
 
@@ -142,11 +150,16 @@ def present_welcome():
     if username is None:
         print "welcome: can't identify user...redirecting to signup"
         bottle.redirect('signup')
-    posts = users.get_posts(username)
-    print posts
-    return bottle.template(wd+'/views/'+'welcome.tpl.html', {'username': username,'posts':posts})
+    user_posts = posts.get_user_posts(username)
+    print user_posts
+    return bottle.template(wd+'/views/'+'welcome.tpl.html', {'username': username,'posts':user_posts})
 
 
+#function to display a particular post
+@bottle.get("/showpost")
+def show_posts():
+  print "hello"
+   
 
 #function to handle creation of the new posts
 @bottle.get("/newpost")
@@ -167,11 +180,15 @@ def add_post():
     head =  bottle.request.forms.get("heading")
     string = bottle.request.forms.get("content")
     
-    thispost ={'heading' : head ,
+    thispost ={
+                       #generate a unique id for post 
+                      'id' : str(datetime.datetime.now())+"_"+make_salt(),
+                      'heading' : head ,
                      'content'  : string ,
                    }
                      
     users.add_posts(username,thispost)
+    posts.add_posts(username,thispost)
     bottle.redirect("welcome")
     
     
@@ -214,6 +231,7 @@ database = connection.blog
 
 users = userDAO.UserDAO(database)
 sessions = sessionDAO.SessionDAO(database)
+posts =  postsDAO.PostsDAO(database)
 
 
 bottle.debug(True)

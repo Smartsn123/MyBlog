@@ -26,10 +26,8 @@
 
 % for post in posts:
     </br>
-   <h1>{{post['head']}}</h1>
+   <h1 style="border:10px" href="/showpost">{{post['head']}}</h1>
    <p>{{post['text']}}</p>
-
-
 
   </body>
 
