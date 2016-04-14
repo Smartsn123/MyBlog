@@ -1,5 +1,5 @@
 import pymongo
-#import sessionDAO ,userDAO , postsDAO
+import sessionDAO ,userDAO , postsDAO
 import bottle
 import cgi
 import re
@@ -224,15 +224,15 @@ def validate_signup(username, password, verify, email, errors):
             return False
     return True
 
-#connection_string = "mongodb://localhost"
-#connection = pymongo.MongoClient(connection_string)
-#database = connection.blog
+connection_string = "mongodb://localhost"
+connection = pymongo.MongoClient(connection_string)
+database = connection.blog
 
-#users = userDAO.UserDAO(database)
-#sessions = sessionDAO.SessionDAO(database)
-#posts =  postsDAO.PostsDAO(database)
+users = userDAO.UserDAO(database)
+sessions = sessionDAO.SessionDAO(database)
+posts =  postsDAO.PostsDAO(database)
 
 
 bottle.debug(True)
-bottle.run(host='0.0.0.0',port='8080')      # Start the webserver running and wait for requests
+bottle.run(host='localhost',port='8080')      # Start the webserver running and wait for requests
 
