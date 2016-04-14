@@ -231,7 +231,8 @@ users = userDAO.UserDAO(database)
 sessions = sessionDAO.SessionDAO(database)
 posts =  postsDAO.PostsDAO(database)
 
-
 bottle.debug(True)
-bottle.run(host='localhost', port=8000)       # Start the webserver running and wait for requests
+app = bottle.default_app()
+
+#bottle.run(server='gae')    # Start the webserver running and wait for requests
 
