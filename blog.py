@@ -232,6 +232,6 @@ sessions = sessionDAO.SessionDAO(database)
 posts =  postsDAO.PostsDAO(database)
 
 
-#bottle.debug(True)
-bottle.run(host='0.0.0.0', port=8080)       # Start the webserver running and wait for requests
+bottle.debug(True)
+bottle.run(server='gae')      # Start the webserver running and wait for requests
 
