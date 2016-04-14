@@ -27,11 +27,8 @@ def make_salt():
 # These are the routes that the blog must handle. They are decorated using bottle.py
 # This route is the main page of the blog
 
+
 @bottle.route('/')
-def blog_index1():
-      return "Hi sunny"
-      
-@bottle.route('/kk')
 def blog_index():
 
     cookie = bottle.request.get_cookie("session")
