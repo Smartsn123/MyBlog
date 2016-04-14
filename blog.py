@@ -1,7 +1,5 @@
 import pymongo
-import sessionDAO
-import userDAO
-import postsDAO
+import sessionDAO ,userDAO , postsDAO
 import bottle
 import cgi
 import re

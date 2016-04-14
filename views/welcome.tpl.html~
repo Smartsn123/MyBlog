@@ -6,6 +6,11 @@
     <style type="text/css">
       .label {text-align: right}
       .error {color: red}
+      .posts
+{
+    background : yellow;
+    float : top;
+}
     </style>
 
   </head>
@@ -26,9 +31,10 @@
 
 % for post in posts:
     </br>
-   <h1 style="border:10px" href="/showpost">{{post['head']}}</h1>
+    <div class ="posts" >
+   <h2 style="border:10px" href="/showpost">{{post['owner']}} : {{post['head']}}  </h2>
+   <h3>{{post['_id'].split('.')[0]}}</h3>
    <p>{{post['text']}}</p>
-
-  </body>
+   </div>
 
 </html>
